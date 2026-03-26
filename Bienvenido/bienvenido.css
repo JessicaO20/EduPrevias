@@ -1,0 +1,88 @@
+
+    :root {
+      --brown-900: #2b1f14;
+      --brown-800: #3b2511;
+      --brown-700: #5a3a23;
+      --brown-600: #7a4f31;
+      --cream: #f3efe6;
+      --muted: #d8cdb8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      color: #fff;
+      background: linear-gradient(135deg, #3a2418 0%, #5b3b23 50%, #7a4f2c 100%);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem;
+    }
+
+    .card {
+      width: min(860px, 92%);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      backdrop-filter: blur(2px);
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.5rem, 4vw + 1rem, 4rem);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    p.description {
+      color: #f0e7d9;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin: 0 auto 2rem;
+      max-width: 60ch;
+    }
+
+    .cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 10px;
+      padding: 0.95rem 1.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+
+    .btn.registrarse {
+      background: linear-gradient(135deg, #8b5e3c 0%, #6b4a2c 60%, #5a3b21 100%);
+    }
+
+    .btn.iniciar {
+      background: linear-gradient(135deg, #a36a2f 0%, #8a4a20 60%, #6f3a1e 100%);
+    }
+
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    .btn:active { transform: translateY(1px) scale(0.98); }
+
+    @media (max-width: 600px) {
+      .card { padding: 2rem 1.25rem; }
+      h1 { font-size: 2.5rem; }
+      p.description { font-size: 1.05rem; }
+    }
