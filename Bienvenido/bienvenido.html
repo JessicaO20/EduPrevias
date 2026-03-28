@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bienvenida</title>
-
   <link rel="stylesheet" href="bienvenido.css">
 </head>
 
@@ -20,12 +19,93 @@
       <p class="descripcion">
         EduPrevias es un espacio digital diseñado para organizar, gestionar y facilitar el proceso de materias previas.</p>
       <div class="botones">
-        <button class="btn iniciar" >Iniciar sesión</button>
-        <button class="btn registrarse" >Registrarse</button>
+      <button class="btn iniciar" id="btnIniciar">Iniciar sesión</button>
+      <button class="btn registrarse" id="btnRegistrarse">Registrarse</button>
         
       </div>
     </section>
   </main>
+
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <div class="modal">
+
+      <button class="modal-cerrar" id="btnCerrar" aria-label="Cerrar">&#x2715;</button>
+
+      <h2 class="modal-titulo" id="modalTitulo">Iniciar sesión</h2>
+      <p class="modal-subtitulo">Accedé a tu cuenta de EduPrevias</p>
+
+      <div class="modal-divider">
+        <span></span>
+        <i>✦</i>
+        <span></span>
+      </div>
+
+      <form id="formLogin" novalidate>
+        <div class="campo">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required />
+        </div>
+
+        <div class="campo">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+
+        <div class="olvide">
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn-modal">Entrar</button>
+      </form>
+
+      <p class="modal-pie">
+        ¿No tenés cuenta? <a href="#">Registrate gratis</a>
+      </p>
+
+    </div>
+  </div>
+
+
+
+
+    <script>
+    const overlay   = document.getElementById('modalOverlay');
+    const btnAbrir  = document.getElementById('btnIniciar');
+    const btnCerrar = document.getElementById('btnCerrar');
+
+    function abrirModal() {
+      overlay.classList.add('activo');
+      document.getElementById('email').focus();
+    }
+
+    function cerrarModal() {
+      overlay.classList.remove('activo');
+      btnAbrir.focus();
+    }
+
+    btnAbrir.addEventListener('click', abrirModal);
+    btnCerrar.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic fuera del cuadro
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) cerrarModal();
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('activo')) cerrarModal();
+    });
+
+    // Manejo básico del formulario
+    document.getElementById('formLogin').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      if (!email || !password) return;
+      // Aquí conectás con tu backend
+      console.log('Iniciando sesión con:', email);
+    });
+  </script>
 
 </body>
 </html>

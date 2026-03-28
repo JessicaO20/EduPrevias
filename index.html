@@ -1,11 +1,387 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bienvenida</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                  url('../assets/img1.png') center/cover no-repeat fixed;
+    }
+
+    .entorno {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem;
+    }
+
+    .seccion {
+      color: rgb(244, 211, 170);
+      width: min(860px, 92%);
+      text-align: center;
+      background: rgba(28, 19, 10, 0.4);
+      border: 2px solid rgba(30, 13, 1, 0.2);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      backdrop-filter: blur(2px);
+      box-shadow: 3px 6px 34px rgba(255, 143, 7, 0.4);
+    }
+
+    .primero {
+      width: min(300px, 100%);
+      margin: 0 auto 20px auto;
+      color: #f98a14;
+      border: 1px solid #f98a14;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.5rem, 4vw + 1rem, 4rem);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    p.descripcion {
+      color: #f0e7d9;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin: 0 auto 2rem;
+      max-width: 60ch;
+    }
+
+    .botones {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 0.95rem 1.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+    }
+
+    .btn.registrarse {
+      background: linear-gradient(135deg, #a36a2f 0%, #8a4a20 60%, #6f3a1e 100%);
+    }
+
+    .btn.iniciar {
+      background: linear-gradient(135deg, #a36a2f 0%, #8a4a20 60%, #6f3a1e 100%);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 3px 6px 34px rgba(255, 143, 7, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 3px 6px 34px rgba(169, 94, 3, 0.4);
+      background: linear-gradient(135deg, #7c5124 0%, #6d3a18 60%, #482613 100%);
+    }
+
+    /* ── OVERLAY ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 5, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 1rem;
+
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.activo {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── MODAL BOX ── */
+    .modal {
+      background: rgba(28, 16, 6, 0.92);
+      border: 1px solid rgba(249, 138, 20, 0.35);
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      width: min(420px, 100%);
+      box-shadow: 0 0 60px rgba(255, 143, 7, 0.25), 0 20px 40px rgba(0,0,0,0.6);
+      position: relative;
+
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    .modal-overlay.activo .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    /* cerrar */
+    .modal-cerrar {
+      position: absolute;
+      top: 1rem;
+      right: 1.1rem;
+      background: none;
+      border: none;
+      color: #a07040;
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .modal-cerrar:hover { color: #f98a14; }
+
+    /* encabezado */
+    .modal-titulo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #f4d3aa;
+      text-align: center;
+      margin: 0 0 0.35rem;
+      letter-spacing: 1.5px;
+    }
+
+    .modal-subtitulo {
+      text-align: center;
+      color: #9c7040;
+      font-size: 0.85rem;
+      margin: 0 0 2rem;
+    }
+
+    /* separador decorativo */
+    .modal-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .modal-divider span {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(249,138,20,0.4), transparent);
+    }
+
+    .modal-divider i {
+      color: #f98a14;
+      font-size: 0.75rem;
+    }
+
+    /* campos */
+    .campo {
+      margin-bottom: 1.2rem;
+    }
+
+    .campo label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #c89060;
+      margin-bottom: 0.45rem;
+    }
+
+    .campo input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(249, 138, 20, 0.25);
+      border-radius: 10px;
+      color: #f4d3aa;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .campo input::placeholder { color: rgba(180,130,80,0.45); }
+
+    .campo input:focus {
+      border-color: rgba(249, 138, 20, 0.65);
+      box-shadow: 0 0 0 3px rgba(249, 138, 20, 0.1);
+    }
+
+    /* olvidé contraseña */
+    .olvide {
+      text-align: right;
+      margin-top: -0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .olvide a {
+      font-size: 0.8rem;
+      color: #9c7040;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .olvide a:hover { color: #f98a14; }
+
+    /* botón principal del modal */
+    .btn-modal {
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, #a36a2f 0%, #8a4a20 60%, #6f3a1e 100%);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(163, 106, 47, 0.4);
+      transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-modal:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(255, 143, 7, 0.45);
+    }
+
+    .btn-modal:active {
+      transform: translateY(1px) scale(0.98);
+      filter: brightness(0.95);
+    }
+
+    /* pie del modal */
+    .modal-pie {
+      text-align: center;
+      margin-top: 1.4rem;
+      font-size: 0.85rem;
+      color: #7a5530;
+    }
+
+    .modal-pie a {
+      color: #f98a14;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .modal-pie a:hover { opacity: 0.8; }
+  </style>
 </head>
+
 <body>
-    
+
+  <main class="entorno" aria-label="Bienvenida EduPreviás">
+    <section class="seccion">
+      <h3 class="primero">Plataforma Educativa</h3>
+      <h1>BIENVENIDO A EDUPREVIAS</h1>
+      <p class="descripcion">
+        EduPrevias es un espacio digital diseñado para organizar, gestionar y facilitar el proceso de materias previas.
+      </p>
+      <div class="botones">
+        <button class="btn iniciar" id="btnIniciar">Iniciar sesión</button>
+        <button class="btn registrarse">Registrarse</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── MODAL INICIO DE SESIÓN ── -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <div class="modal">
+
+      <button class="modal-cerrar" id="btnCerrar" aria-label="Cerrar">&#x2715;</button>
+
+      <h2 class="modal-titulo" id="modalTitulo">Iniciar sesión</h2>
+      <p class="modal-subtitulo">Accedé a tu cuenta de EduPrevias</p>
+
+      <div class="modal-divider">
+        <span></span>
+        <i>✦</i>
+        <span></span>
+      </div>
+
+      <form id="formLogin" novalidate>
+        <div class="campo">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required />
+        </div>
+
+        <div class="campo">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+
+        <div class="olvide">
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn-modal">Entrar</button>
+      </form>
+
+      <p class="modal-pie">
+        ¿No tenés cuenta? <a href="#">Registrate gratis</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const overlay   = document.getElementById('modalOverlay');
+    const btnAbrir  = document.getElementById('btnIniciar');
+    const btnCerrar = document.getElementById('btnCerrar');
+
+    function abrirModal() {
+      overlay.classList.add('activo');
+      document.getElementById('email').focus();
+    }
+
+    function cerrarModal() {
+      overlay.classList.remove('activo');
+      btnAbrir.focus();
+    }
+
+    btnAbrir.addEventListener('click', abrirModal);
+    btnCerrar.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic fuera del cuadro
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) cerrarModal();
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('activo')) cerrarModal();
+    });
+
+    // Manejo básico del formulario
+    document.getElementById('formLogin').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      if (!email || !password) return;
+      // Aquí conectás con tu backend
+      console.log('Iniciando sesión con:', email);
+    });
+  </script>
+
 </body>
 </html>
