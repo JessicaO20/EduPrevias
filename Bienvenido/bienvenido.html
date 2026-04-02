@@ -26,10 +26,11 @@
     </section>
   </main>
 
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+<div class="modal-overlay" id="modalOverlay">
     <div class="modal">
 
-      <button class="modal-cerrar" id="btnCerrar" aria-label="Cerrar">&#x2715;</button>
+      <button class="modal-cerrar" id="btnCerrar">&#x2715;</button>
 
       <h2 class="modal-titulo" id="modalTitulo">Iniciar sesión</h2>
       <p class="modal-subtitulo">Accedé a tu cuenta de EduPrevias</p>
@@ -40,32 +41,77 @@
         <span></span>
       </div>
 
-      <form id="formLogin" novalidate>
+      <form id="formLogin" >
         <div class="campo">
-          <label for="email">Correo electrónico</label>
-          <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required />
+          <label for="username">Nombre de Usuario</label>
+          <input type="text" id="username" name="username" placeholder="Usuario" required />
         </div>
 
         <div class="campo">
           <label for="password">Contraseña</label>
-          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+          <input type="password" id="password" name="password" placeholder="••••••••" required />
         </div>
 
         <div class="olvide">
           <a href="#">¿Olvidaste tu contraseña?</a>
         </div>
 
-        <button type="submit" class="btn-modal">Entrar</button>
+        <button type="submit" class="btn-modal">Ingresar</button>
       </form>
 
       <p class="modal-pie">
-        ¿No tenés cuenta? <a href="#">Registrate gratis</a>
+        ¿No tenés cuenta? <a href="#">Registrate</a>
       </p>
 
     </div>
   </div>
 
 
+<div class="modal-overlay" id="modalRegistroOverlay">
+  <div class="modal">
+
+    <button class="modal-cerrar" id="btnCerrarRegistro">&#x2715;</button>
+
+    <h2 class="modal-titulo">Registrarse</h2>
+    <p class="modal-subtitulo">Creá tu cuenta en EduPrevias</p>
+
+    <div class="modal-divider">
+      <span></span>
+      <i>✦</i>
+      <span></span>
+    </div>
+
+    <form id="formRegistro">
+
+      <div class="campo">
+        <label for="regUsuario">Nombre de usuario</label>
+        <input type="text" id="regUsuario" placeholder="Usuario" required />
+      </div>
+
+      <div class="campo">
+        <label for="regEmail">Correo electrónico</label>
+        <input type="email" id="regEmail" placeholder="correo@email.com" required />
+      </div>
+
+      <div class="campo">
+        <label for="regPassword">Contraseña</label>
+        <input type="password" id="regPassword" placeholder="••••••••" required />
+      </div>
+
+      <div class="campo">
+        <label for="regPassword2">Confirmar contraseña</label>
+        <input type="password" id="regPassword2" placeholder="••••••••" required />
+      </div>
+
+      <button type="submit" class="btn-modal">Registrarme</button>
+    </form>
+
+    <p class="modal-pie">
+      ¿Ya tenés cuenta? <a href="#btnIniciar" id="irLogin">Iniciar sesión</a>
+    </p>
+
+  </div>
+</div>
 
 
     <script>
@@ -75,7 +121,7 @@
 
     function abrirModal() {
       overlay.classList.add('activo');
-      document.getElementById('email').focus();
+      document.getElementById('username').focus();
     }
 
     function cerrarModal() {
@@ -99,12 +145,58 @@
     // Manejo básico del formulario
     document.getElementById('formLogin').addEventListener('submit', (e) => {
       e.preventDefault();
-      const email    = document.getElementById('email').value.trim();
+      const email    = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
       if (!email || !password) return;
       // Aquí conectás con tu backend
-      console.log('Iniciando sesión con:', email);
+      console.log('Iniciando sesión con:', username);
     });
+
+  </script>
+
+  <script>
+    const overlayRegistro = document.getElementById('modalRegistroOverlay');
+const btnAbrirRegistro = document.getElementById('btnRegistrarse');
+const btnCerrarRegistro = document.getElementById('btnCerrarRegistro');
+
+function abrirRegistro() {
+  overlayRegistro.classList.add('activo');
+  document.getElementById('regNombre').focus();
+}
+
+function cerrarRegistro() {
+  overlayRegistro.classList.remove('activo');
+}
+
+btnAbrirRegistro.addEventListener('click', abrirRegistro);
+btnCerrarRegistro.addEventListener('click', cerrarRegistro);
+
+// cerrar haciendo click afuera
+overlayRegistro.addEventListener('click', (e) => {
+  if (e.target === overlayRegistro) cerrarRegistro();
+});
+
+// cerrar con ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && overlayRegistro.classList.contains('activo')) {
+    cerrarRegistro();
+  }
+});
+
+// validación básica
+document.getElementById('formRegistro').addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const pass1 = document.getElementById('regPassword').value;
+  const pass2 = document.getElementById('regPassword2').value;
+
+  if (pass1 !== pass2) {
+    alert('Las contraseñas no coinciden');
+    return;
+  }
+
+  console.log('Registro exitoso');
+});
   </script>
 
 </body>
