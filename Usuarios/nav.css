@@ -1,0 +1,116 @@
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* FONDO */
+body{
+    background:#121212;
+    font-family:Arial, sans-serif;
+}
+
+/* MENU LATERAL */
+.menu-lateral{
+    width:260px;
+    height:100vh;
+    background:#1c1c1c;
+    padding:15px; /* 👈 MENOS ESPACIO */
+    display:flex;
+    flex-direction:column;
+}
+
+/* LOGO */
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px; /* 👈 ANTES ERA MUCHO */
+}
+
+.logo img{
+    width:55px;
+    height: 55px;
+}
+
+.logo h2{
+    color:#f5c16c;
+    font-size:18px;
+}
+
+/* TITULOS */
+.titulo{
+    color:#9a9a9a;
+    font-size:12px;
+    margin:10px 0 5px; /* 👈 MÁS PEGADO */
+}
+
+/* ITEMS */
+.item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:10px;
+    border-radius:12px;
+    color:#e5e5e5;
+    text-decoration:none;
+
+    margin-bottom:5px; /* 👈 MENOS ESPACIO ENTRE ITEMS */
+}
+
+/* ICONOS */
+.item i{
+    font-size:18px;
+}
+
+/* HOVER */
+.item:hover{
+    background:#2a2a2a;
+}
+
+/* ACTIVO (Inicio) */
+.activo{
+    background:#3a3a3a;
+    color:#f5c16c;
+}
+
+/* CERRAR SESION */
+.salir{
+    color:#ff5c5c;
+}
+
+/* USUARIO ABAJO */
+.usuario{
+    margin-top:auto; /* 👈 ESTO LO MANDA ABAJO */
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    border-top:1px solid #2a2a2a;
+    padding-top:10px;
+}
+
+/* CIRCULO */
+.circulo{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#f5c16c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* TEXTO USUARIO */
+.nombre{
+    color:white;
+    font-size:14px;
+}
+
+.detalle{
+    color:#9a9a9a;
+    font-size:12px;
+}
